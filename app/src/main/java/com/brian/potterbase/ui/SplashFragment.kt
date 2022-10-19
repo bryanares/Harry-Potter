@@ -21,8 +21,7 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentSplashBinding.inflate(inflater, container, false)
-
-        viewModel.getCharacterItems()
+        viewModel.getCharacter()
         binding.splashButton.setOnClickListener{
            findNavController().navigate(R.id.action_splashFragment_to_potterListFragment)
         }
