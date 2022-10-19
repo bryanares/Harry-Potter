@@ -1,5 +1,6 @@
 package com.brian.potterbase.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.brian.potterbase.CharacterDetailActivity
 import com.brian.potterbase.databinding.FragmentPotterListBinding
+import com.brian.potterbase.network.PotterCharacterItem
 
 class PotterListFragment : Fragment() {
 
@@ -16,7 +19,7 @@ class PotterListFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: PotterViewModel by activityViewModels()
     private lateinit var potterListAdapter: PotterListAdapter
-
+    private lateinit var character : PotterCharacterItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +28,7 @@ class PotterListFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentPotterListBinding.inflate(inflater, container, false)
         potterListAdapter = PotterListAdapter(this)
-
+        viewModel.getCharacter()
 //        setupRecyclerView()
         return binding.root
     }
@@ -37,7 +40,6 @@ class PotterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getCharacter()
 
         viewModel.potterCharacterItems.observe(viewLifecycleOwner) {
             binding.potterListRecyclerView.adapter = potterListAdapter
@@ -48,6 +50,18 @@ class PotterListFragment : Fragment() {
 
     fun onItemClick(position: Int) {
         Toast.makeText(this.context, "Character clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this.context, CharacterDetailActivity::class.java)
+
+        intent.putExtra("PotterImage", potterListAdapter.allItem[position].image)
+        intent.putExtra("PotterName", potterListAdapter.allItem[position].name)
+        intent.putExtra("PotterSpecies", potterListAdapter.allItem[position].species)
+        intent.putExtra("PotterHouse", potterListAdapter.allItem[position].house)
+        intent.putExtra("PotterAncestry", potterListAdapter.allItem[position].ancestry)
+        intent.putExtra("PotterPatronus", potterListAdapter.allItem[position].patronus)
+        intent.putExtra("PotterActor", potterListAdapter.allItem[position].actor)
+        intent.putExtra("PotterBirthday", potterListAdapter.allItem[position].dateOfBirth)
+
+        startActivity(intent)
     }
 
 
