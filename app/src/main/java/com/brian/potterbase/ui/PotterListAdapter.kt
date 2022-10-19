@@ -25,13 +25,6 @@ class PotterListAdapter(private val listener: PotterListFragment) :
         RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
-        fun bind(potter: PotterCharacterItem) {
-            Picasso.get().load(potter.image).into(binding.potterImageView)
-            binding.potterName.text = potter.name
-            binding.potterHouse.text = potter.house
-
-        }
-
         init {
             itemView.setOnClickListener(this)
         }
@@ -42,6 +35,14 @@ class PotterListAdapter(private val listener: PotterListFragment) :
                 listener.onItemClick(position)
             }
         }
+        fun bind(potter: PotterCharacterItem) {
+            Picasso.get().load(potter.image).into(binding.potterImageView)
+            binding.potterName.text = potter.name
+            binding.potterHouse.text = potter.house
+
+        }
+
+
 
 
     }
