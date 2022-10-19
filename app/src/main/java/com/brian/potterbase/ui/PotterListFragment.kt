@@ -5,20 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.brian.potterbase.R
 import com.brian.potterbase.databinding.FragmentPotterListBinding
-import com.brian.potterbase.network.PotterApi
 
 class PotterListFragment : Fragment() {
-    private var _binding : FragmentPotterListBinding? = null
-    private val binding get() = _binding!!
 
+    private var _binding: FragmentPotterListBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: PotterViewModel by activityViewModels()
     private lateinit var potterListAdapter: PotterListAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,14 +24,10 @@ class PotterListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPotterListBinding.inflate(inflater, container, false)
-        viewModel.getCharacterItems()
-
+        potterListAdapter = PotterListAdapter(this)
 
 //        setupRecyclerView()
-
-
-        val view = binding.root
-        return view
+        return binding.root
     }
 
 //    private fun setupRecyclerView() = binding.potterListRecyclerView.apply {
@@ -43,15 +37,18 @@ class PotterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getCharacter()
 
-        potterListAdapter = PotterListAdapter(mutableListOf())
-        val adapter = potterListAdapter
-
-        binding.potterListRecyclerView.apply {
-            binding.potterListRecyclerView.adapter = adapter
+        viewModel.potterCharacterItems.observe(viewLifecycleOwner) {
+            binding.potterListRecyclerView.adapter = potterListAdapter
+            potterListAdapter.allItem = it
             binding.potterListRecyclerView.layoutManager = LinearLayoutManager(this.context)
-            viewModel.getCharacterItems()
         }
     }
+
+    fun onItemClick(position: Int) {
+        Toast.makeText(this.context, "Character clicked", Toast.LENGTH_SHORT).show()
+    }
+
 
 }
