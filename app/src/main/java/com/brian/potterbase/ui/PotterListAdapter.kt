@@ -10,26 +10,28 @@ import com.brian.potterbase.network.PotterCharacterItem
 import com.squareup.picasso.Picasso
 
 
-class PotterListAdapter(private val listener: PotterListFragment) : RecyclerView.Adapter<PotterListAdapter.PotterListViewHolder>(){
+class PotterListAdapter(private val listener: PotterListFragment) :
+    RecyclerView.Adapter<PotterListAdapter.PotterListViewHolder>() {
 
 
-    var allItem : List<PotterCharacterItem> = emptyList()
-    @SuppressLint("NotifyDataSetChanged")
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+    var allItem: List<PotterCharacterItem> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
-    inner class PotterListViewHolder(val binding: PotterItemBinding):
+    inner class PotterListViewHolder(private val binding: PotterItemBinding) :
         RecyclerView.ViewHolder(binding.root),
-    View.OnClickListener{
+        View.OnClickListener {
 
-        fun bind(potter : PotterCharacterItem){
+        fun bind(potter: PotterCharacterItem) {
             Picasso.get().load(potter.image).into(binding.potterImageView)
             binding.potterName.text = potter.name
             binding.potterHouse.text = potter.house
 
         }
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -37,7 +39,7 @@ class PotterListAdapter(private val listener: PotterListFragment) : RecyclerView
         override fun onClick(p0: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-               listener.onItemClick(position)
+                listener.onItemClick(position)
             }
         }
 
@@ -60,7 +62,7 @@ class PotterListAdapter(private val listener: PotterListFragment) : RecyclerView
     }
 
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
