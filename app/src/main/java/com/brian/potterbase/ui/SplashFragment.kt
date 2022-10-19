@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.brian.potterbase.R
 import com.brian.potterbase.databinding.FragmentSplashBinding
@@ -22,10 +21,9 @@ class SplashFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentSplashBinding.inflate(inflater, container, false)
         viewModel.getCharacter()
-        binding.splashButton.setOnClickListener{
-           findNavController().navigate(R.id.action_splashFragment_to_potterListFragment)
+        binding.splashButton.setOnClickListener {
+            findNavController().navigate(R.id.action_splashFragment_to_potterListFragment)
         }
-        val view = binding.root
-        return view
+        return binding.root
     }
 }
