@@ -15,15 +15,27 @@ class PotterViewModel : ViewModel() {
     val potterCharacterItems : LiveData<List<PotterCharacterItem>> get() = _potterCharacterItems
 
 
-    fun getCharacterItems () : MutableLiveData<List<PotterCharacterItem>>{
+//    fun getCharacterItems () : MutableLiveData<List<PotterCharacterItem>>{
+//        viewModelScope.launch {
+//            try {
+//                _potter
+//                Log.d("ViewModel", "Data fetched")
+//            }catch (e : Exception){
+//                Log.e("ViewModel", "Error fetching data")
+//            }
+//        }
+//        return _potterCharacterItems
+//    }
+
+    fun getCharacter() : List<PotterCharacterItem>?{
         viewModelScope.launch {
             try {
-                _potterCharacterItems.value = PotterApi.retrofitService.getAllCharacters()
+                _potterCharacterItems.postValue(PotterApi.retrofitService.getAllCharacters())
                 Log.d("ViewModel", "Data fetched")
             }catch (e : Exception){
                 Log.e("ViewModel", "Error fetching data")
             }
         }
-        return _potterCharacterItems
+        return _potterCharacterItems.value
     }
 }
