@@ -25,7 +25,7 @@ private val retrofit = Retrofit.Builder()
 //interface with API methods
 interface PotterApiService {
     @GET("characters")
-    suspend fun getAllCharacters(): MutableList<PotterCharacterItem>
+    suspend fun getAllCharacters(): List<PotterCharacterItem>
 }
 
 //singleton object of Retrofit API service
