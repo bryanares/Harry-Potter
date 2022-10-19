@@ -1,6 +1,8 @@
 package com.brian.potterbase
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -8,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.brian.potterbase.databinding.ActivityCharacterDetailBinding
+import com.squareup.picasso.Picasso
 
 class CharacterDetailActivity : AppCompatActivity() {
 
@@ -20,21 +23,25 @@ class CharacterDetailActivity : AppCompatActivity() {
         binding = ActivityCharacterDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.navHostFragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val characterImage: ImageView = binding.potterImage
+        val characterName : TextView = binding.potterName
+        val characterSpecies : TextView = binding.potterSpecies
+        val characterActor : TextView = binding.potterActor
+        val characterHouse : TextView = binding.potterHouse
+        val characterAncestry : TextView = binding.potterAncestry
+        val characterPatronus : TextView = binding.potterPatronus
+        val characterBirthday : TextView = binding.potterBirthYear
 
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
-    }
+        Picasso.get().load(intent.getStringExtra("PotterImage")).into(characterImage)
+        characterName.text = intent.getStringExtra("PotterName").toString()
+        characterSpecies.text = intent.getStringExtra("PotterSpecies").toString()
+        characterActor.text = intent.getStringExtra("PotterActor").toString()
+        characterHouse.text = intent.getStringExtra("PotterHouse").toString()
+        characterAncestry.text = intent.getStringExtra("PotterAncestry").toString()
+        characterPatronus.text = intent.getStringExtra("PotterPatronus").toString()
+        characterBirthday.text = intent.getStringExtra("PotterBirthday").toString()
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.navHostFragment)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+
     }
 }
